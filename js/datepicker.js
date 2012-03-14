@@ -6,6 +6,9 @@
  * selected dates.  Easily styled with two example styles provided: an attractive
  * 'dark' style, and a Google Analytics-like 'clean' style.
  * 
+ * View project page for Examples and Documentation:
+ * http://foxrunsoftware.github.com/DatePicker/
+ * 
  * This project is distinct from and not affiliated with the jquery.ui.datepicker.
  * 
  * Copyright 2012, Justin Stern (www.foxrunsoftware.net)
@@ -207,8 +210,9 @@
          * the HTMLElement that DatePicker was invoked upon.
          * 
          * @param dates: Selected date(s) depending on calendar mode.  When calendar mode  is 'single' this
-         *        is a single date object.  When calendar mode is 'range', this is an array containing 
-         *        a 'from' and 'to' date objects.  When calendar mode is 'multiple'
+         *        is a single Date object.  When calendar mode is 'range', this is an array containing 
+         *        a 'from' and 'to' Date objects.  When calendar mode is 'multiple' this is an array
+         *        of Date objects.
          * @param HTMLElement el the DatePicker element, ie the element that DatePicker was invoked upon
          */
         onChange: function() { },
@@ -880,7 +884,7 @@
        * Sets the DatePicker current date, and optionally shifts the current
        * calendar to that date.
        * 
-       * @param Date|String|Array date The currently selected date(s).  
+       * @param Date|String|int|Array date The currently selected date(s).  
        *        This can be: a single date, an array 
        *        of two dates (sets a range when 'mode' is 'range'), or an array of
        *        any number of dates (selects all dates when 'mode' is 'multiple'.  
@@ -911,8 +915,9 @@
        * Returns the currently selected date(s) and the datepicker element.
        * 
        * @return array where the first element is the selected date(s)  When calendar mode  is 'single' this
-       *        is a single date object.  When calendar mode is 'range', this is an array containing 
-       *        a 'from' and 'to' date objects.  When calendar mode is 'multiple'.
+       *        is a single date object, or null if no date is selected.  When calendar mode is 'range', this is an array containing 
+       *        a 'from' and 'to' date objects, or the empty array if no date range is selected.  When calendar mode is 'multiple' this
+       *       	is an array of Date objects, or the empty array if no date is selected.
        *        The second element is the HTMLElement that DatePicker was invoked upon
        * 
        * @see DatePickerGetDate()

@@ -7,9 +7,9 @@ Yet another jQuery-based date picker!  This date picker provides an easy way of 
 Download the latest release, and jQuery.
 
     <script type="text/javascript" src="/js/jquery/jquery.js"></script>
-    <script type="text/javascript" src="/js/datepicker.js"></script>
-    <link rel="stylesheet" media="screen" type="text/css" href="/css/datepicker/base.css" />
-    <link rel="stylesheet" media="screen" type="text/css" href="/css/datepicker/clean.css" />
+    <script type="text/javascript" src="/js/datepicker/js/datepicker.js"></script>
+    <link rel="stylesheet" media="screen" type="text/css" href="/js/datepicker/css/base.css" />
+    <link rel="stylesheet" media="screen" type="text/css" href="/js/datepicker/css/clean.css" />
     
     <div id="simple-calendar"></div>
     
@@ -23,7 +23,7 @@ Download the latest release, and jQuery.
 
 <img src="https://github.com/foxrunsoftware/DatePicker/blob/master/examples/screenshot-1.png?raw=true" />
 
-Take a look at the examples page for live, and additional examples.  Then visit the API reference page.
+Take a look at the [examples page](http://foxrunsoftware.github.com/DatePicker/) for live, and additional examples.  Then visit the [API reference page](http://foxrunsoftware.github.com/DatePicker/reference.html).
 
 ## Bug tracker
 
