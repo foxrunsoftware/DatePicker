@@ -3,8 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>DatePicker from FoxRunSoftware</title>
-    <link rel="canonical" href="http://foxrunsoftware.github.com/DatePicker/" />
+    <title>Dark Style - DatePicker</title>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
@@ -21,7 +20,7 @@
     <!-- datepicker javascript and css -->
     <script type="text/javascript" src="assets/js/datepicker/js/datepicker.js"></script>
     <link rel="stylesheet" media="screen" type="text/css" href="assets/js/datepicker/css/base.css" />
-    <link rel="stylesheet" media="screen" type="text/css" href="assets/js/datepicker/css/clean.css" />
+    <link rel="stylesheet" media="screen" type="text/css" href="assets/js/datepicker/css/dark.css" />
     
     <!-- Google Code Prettify -->
     <link href="assets/css/prettify/prettify.css" type="text/css" rel="stylesheet" />
@@ -73,22 +72,13 @@
         top: 27px;
         left: 0;
         overflow: hidden;
-        width: 497px;
-        height:153px;
-        background-color: #F7F7F7;
-        border: 1px solid #CCCCCC;
+        width: 527px;
+        height: 157px;
+        background-color: black;
+        border: 3px solid #CCCCCC;
         border-radius: 0 5px 5px 5px;
         display:none;
-        padding:10px 0 0 10px;
       }
-      
-      /* Remove default border from the custom widget since we're adding our own.  TBD: rework the dropdown calendar to use the default borders */
-      #datepicker-calendar div.datepicker {
-        background-color: transparent;
-      border: none;
-      border-radius: 0;
-      padding: 0;
-    }
     </style>
       
     <script type="text/javascript">
@@ -229,15 +219,6 @@
       div.datepicker table { margin-bottom: 0; }
       div.datepicker table th,
       div.datepicker table td { border-top-style:none; }
-      div.datepicker th {
-        color: #404040;
-      }
-      div.datepicker a, div.datepicker a:hover {
-        color: #404040;
-      }
-      div.datepicker a {
-        color: #404040;
-      }
       #date-range-field a { outline-style: none; }
       
     </style>
@@ -249,8 +230,8 @@
         <div class="container">
           <a href="./" class="brand">DatePicker</a>
           <ul class="nav">
-            <li class="active"><a href="./">Clean Style</a></li>
-            <li><a href="./dark.html">Dark Style</a></li>
+            <li><a href="./">Clean Style</a></li>
+            <li class="active"><a href="./dark.html">Dark Style</a></li>
             <li><a href="./reference.html">API/Reference</a></li>
           </ul>
         </div>
@@ -259,30 +240,21 @@
     
     <div class="container">
       
-      <header class="masthead">
-        <h1>DatePicker from FoxRunSoftware</h1>
-        <p>jQuery-based DatePicker with support for date ranges, multiple calendars, easy styling and more.</p>
-        <p class="download-info">
-          <a class="btn btn-primary btn-large" href="https://github.com/foxrunsoftware/DatePicker/">View project on GitHub</a>
-          <a class="btn btn-large" href="assets/datepicker.zip">Download DatePicker <small>(v1.0.0)</small></a>
-        </p>
-      </header>
-      
       <div class="page-header">
-        <h1>Clean Style Examples</h1>
+        <h1>Dark Style Examples</h1>
       </div>
       
       <div class="row">
         <div class="span4">
           <h3>Load the Scripts/Styles</h3>
-          <p>First, load jquery, datepicker, and the base and clean stylesheets.</p>
+          <p>First, load jquery, datepicker, and the base and dark stylesheets.</p>
         </div>
         <div class="span8">
           <pre class="prettyprint">
 &lt;script type="text/javascript" src="/js/jquery/jquery.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript" src="/js/datepicker/js/datepicker.js"&gt;&lt;/script&gt;
 &lt;link rel="stylesheet" type="text/css" href="/js/datepicker/css/base.css" /&gt;
-&lt;link rel="stylesheet" type="text/css" href="/js/datepicker/css/clean.css" /&gt;</pre>
+&lt;link rel="stylesheet" type="text/css" href="/js/datepicker/css/dark.css" /&gt;</pre>
         </div>
       </div>
       <hr/>
