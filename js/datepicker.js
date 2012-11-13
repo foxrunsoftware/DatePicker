@@ -20,7 +20,8 @@
  *   jquery.js
  */
 (function ($) {
-  var DatePicker = function () {
+  var cache = {}, tmpl,
+  DatePicker = function () {
     var ids = {},
       views = {
         years: 'datepickerViewYears',
@@ -992,13 +993,8 @@
     DatePickerClear: DatePicker.clear,
     DatePickerLayout: DatePicker.fixLayout
   });
-})(jQuery);
 
-(function(){
-  // within here, 'this' refers to the window object
-  var cache = {};
-  
-  this.tmpl = function tmpl(str, data){
+  tmpl = function tmpl(str, data){
     // Figure out if we're getting a template, or if we need to
     // load the template - and be sure to cache the result.
     var fn = !/\W/.test(str) ?
@@ -1027,4 +1023,5 @@
     // Provide some basic currying to the user
     return data ? fn( data ) : fn;
   };
-})();
+
+})(jQuery);
