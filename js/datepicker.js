@@ -492,8 +492,10 @@
               
               if(options.mode == 'range') {
                 // range, select the whole month
-                options.date[0] = (tmp.setHours(0,0,0,0)).valueOf();
-                tmp.addDays(tmp.getMaxDays()-1);
+                tmp.setHours(0,0,0,0);
+                tmp.setDate(1);
+                options.date[0] = tmp.valueOf();
+                tmp.setDate(tmp.getMaxDays());
                 tmp.setHours(23,59,59,0);
                 options.date[1] = tmp.valueOf();
                 fillIt = true;
