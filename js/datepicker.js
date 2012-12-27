@@ -489,6 +489,8 @@
           var tblEl = parentEl.parent().parent().parent();
           var tblIndex = $('table', this).index(tblEl.get(0)) - 1;
           var tmp = new Date(options.current);
+          var tmpStart = new Date(options.current);
+          var tmpEnd = new Date(options.current);
           var changed = false;
           var changedRange = false;
           var fillIt = false;
@@ -500,15 +502,46 @@
             if (el.hasClass('datepickerMonth')) {
               // clicking on the title of a Month Datepicker
               tmp.addMonths(tblIndex - currentCal);
+              tmpStart.addMonths(tblIndex - currentCal);
+              tmpEnd.addMonths(tblIndex - currentCal);
               
               if(options.mode == 'range') {
                 // range, select the whole month
-                tmp.setHours(0,0,0,0);
-                tmp.setDate(1);
-                options.date[0] = tmp.valueOf();
-                tmp.setDate(tmp.getMaxDays());
-                tmp.setHours(23,59,59,0);
-                options.date[1] = tmp.valueOf();
+
+                // Check if the start date is allowed 
+                // options.selectableDates[0];
+                // options.selectableDates[1];
+                var baseDate = options.selectableDates[0];
+                var endDate = options.selectableDates[1];
+
+                tmpStart.setHours(0,0,0,0);
+                tmpStart.setDate(1);
+
+                if (options.selectableDates != null) {
+                  if (tmpStart.getTime() < baseDate.getTime() ){
+                    tmpStart.setTime(baseDate.getTime());
+                  }
+                }
+                options.date[0] = tmpStart.valueOf();
+                
+                // Check if the end date is allowed 
+                tmpEnd.setDate(tmpEnd.getMaxDays());
+                tmpEnd.setHours(23,59,59,0);
+
+                if (options.selectableDates != null) {
+                  if (tmpEnd.getTime() > endDate.getTime()){
+                    tmpEnd.setTime(endDate.getTime());
+                  }
+                }
+                options.date[1] = tmpEnd.valueOf();
+
+                if (options.selectableDates != null) {
+                  if((tmpStart.getTime() > endDate.getTime()) || (tmpEnd.getTime() < baseDate.getTime())){
+                    options.date[0] = 0;
+                    options.date[1] = 0;
+                  }
+                }
+
                 fillIt = true;
                 changed = true;
                 options.lastSel = false;

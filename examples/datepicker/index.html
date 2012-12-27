@@ -119,10 +119,9 @@
           date: [new Date(), new Date() - 1000 * 60 * 60 * 24 * 2, new Date() - 1000 * 60 * 60 * 24 * 4]
         });
 
-        var minAllowed = new Date('November 4 2012');
-        var maxAllowed = new Date('December 27 2012');
-
         /* range inline calendar with daterange selection*/
+        var minAllowed = new Date('December 4 2012');
+        var maxAllowed = new Date('December 25 2012');
         $('#range-calendar-daterange').DatePicker({
           mode: 'range',
           inline: true,
@@ -130,8 +129,8 @@
           selectableDates: [minAllowed, maxAllowed]
         });
 
-        var lastWeekRange = [new Date() - 1000 * 60 * 60 * 24 * 7, new Date()];
-        $('#range-calendar-daterange').DatePickerSetDate(lastWeekRange, true);
+        //var lastWeekRange = [new Date() - 1000 * 60 * 60 * 24 * 7, new Date()];
+        //$('#range-calendar-daterange').DatePickerSetDate(lastWeekRange, true);
         
         /* Calendar tied to text input */
         $('#inputDate').DatePicker({
@@ -294,28 +293,6 @@
 
       <div class="row">
         <div class="span4">
-          <h3>Daterange Calendar with past/future disabled ranges </h3>
-          <p>Three calendars, side-by-side, with multiple date selection enabled as well.</p>
-        </div>
-        <div class="span8">
-          <div id="range-calendar-daterange"></div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="span8 offset4">
-          <pre class="prettyprint">
-$('#range-calendar-daterange').DatePicker({
-  mode: 'range',
-  inline: true,
-  calendars: 3
-});</pre>
-        </div>
-      </div>
-      <hr/>
-
-      <div class="row">
-        <div class="span4">
           <h3>Load the Scripts/Styles</h3>
           <p>First, load jquery, datepicker, and the base and clean stylesheets.</p>
         </div>
@@ -367,6 +344,32 @@ $('#multi-calendar').DatePicker({
   calendars: 3,
   date: [new Date(), new Date() - 172800000, new Date() - 345600000]
 });</pre>
+        </div>
+      </div>
+      <hr/>
+
+      <div class="row">
+        <div class="span4">
+          <h3>Calendar with available date range only </h3>
+          <p>Three calendars, side-by-side, with date range availability, with month selection validation included</p>
+        </div>
+        <div class="span8">
+          <div id="range-calendar-daterange"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="span8 offset4">
+          <pre class="prettyprint">
+var minAllowed = new Date('November 4 2012');
+var maxAllowed = new Date('December 27 2012');
+$('#range-calendar-daterange').DatePicker({
+  mode: 'range',
+  inline: true,
+  calendars: 3,
+  selectableDates: [minAllowed, maxAllowed]
+});
+</pre>
         </div>
       </div>
       <hr/>
