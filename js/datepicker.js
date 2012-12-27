@@ -150,6 +150,12 @@
          */
         current: null,
         /**
+         * Optional date range which limits the selectable dates. The range of acceptable dates,
+         * in an array of [min, max], disables any date outside of the range. Arguments should be
+         * Date objects.
+         */
+        selectableDates: null,
+        /**
          * true causes the datepicker calendar to be appended to the DatePicker 
          * element and rendered, false binds the DatePicker to an event on the trigger element
          */
@@ -343,7 +349,12 @@
             if (today.getDate() == date.getDate() && today.getMonth() == date.getMonth() && today.getYear() == date.getYear()) {
               data.weeks[indic].days[indic2].classname.push('datepickerToday');
             }
-            if (date > today) {
+            if($.isArray(options.selectableDates) && options.selectableDates.length == 2) {
+              if(date < options.selectableDates[0] || date > options.selectableDates[1]) {
+                data.weeks[indic].days[indic2].classname.push('datepickerFuture');
+                data.weeks[indic].days[indic2].classname.push('datepickerDisabled');
+              }
+            } else if (date > today) {
               // current month, date in future
               data.weeks[indic].days[indic2].classname.push('datepickerFuture');
             }

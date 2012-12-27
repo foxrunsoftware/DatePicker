@@ -119,11 +119,15 @@
           date: [new Date(), new Date() - 1000 * 60 * 60 * 24 * 2, new Date() - 1000 * 60 * 60 * 24 * 4]
         });
 
+        var minAllowed = new Date('November 4 2012');
+        var maxAllowed = new Date('December 27 2012');
+
         /* range inline calendar with daterange selection*/
         $('#range-calendar-daterange').DatePicker({
           mode: 'range',
           inline: true,
-          calendars: 3
+          calendars: 3,
+          selectableDates: [minAllowed, maxAllowed]
         });
 
         var lastWeekRange = [new Date() - 1000 * 60 * 60 * 24 * 7, new Date()];
