@@ -12,20 +12,24 @@
     <![endif]-->
     
     <!-- jquery -->
-    <script type="text/javascript" src="assets/js/jquery/jquery.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     
     <!-- load twitter bootstrap styles and optional javascript -->
+    <!-- Ignore styling for now
     <link rel="stylesheet" media="screen" type="text/css" href="assets/css/bootstrap/css/bootstrap.min.css" />
     <script type="text/javascript" src="assets/css/bootstrap/js/bootstrap.min.js"></script>
+    -->
     
     <!-- datepicker javascript and css -->
-    <script type="text/javascript" src="assets/js/datepicker/js/datepicker.js"></script>
-    <link rel="stylesheet" media="screen" type="text/css" href="assets/js/datepicker/css/base.css" />
-    <link rel="stylesheet" media="screen" type="text/css" href="assets/js/datepicker/css/clean.css" />
+    <script type="text/javascript" src="../js/datepicker.js"></script>
+    <link rel="stylesheet" media="screen" type="text/css" href="../css/datepicker/base.css" />
+    <link rel="stylesheet" media="screen" type="text/css" href="../css/datepicker/clean.css" />
     
     <!-- Google Code Prettify -->
+    <!-- Ignore styling for now
     <link href="assets/css/prettify/prettify.css" type="text/css" rel="stylesheet" />
     <script type="text/javascript" src="assets/css/prettify/prettify.js"></script>
+    -->
     
     <style type="text/css">
       /* Style the calendar custom widget */
@@ -96,7 +100,7 @@
       $(document).ready(function() {
         
         // pretty-print the source
-        prettyPrint();
+        // prettyPrint();
         
         /* simple inline calendar */
         $('#simple-calendar').DatePicker({
@@ -167,8 +171,46 @@
             $('#date-range-field a').css({borderBottomRightRadius:5});
           }
           return false;
+        });      
+
+      /* Special calendar with 2 months */
+
+        $('#datepicker-calendar2').DatePicker({
+          inline: true,
+          date: [from, to],
+          calendars: 2,
+          mode: 'range',
+          headerClick: 'switchMonthYearView',
+          current: new Date(to.getFullYear(), to.getMonth() - 1, 1),
+          onChange: function(dates,el) {
+            // update the range display
+            $('#date-range-field2 span').text(dates[0].getDate()+' '+dates[0].getMonthName(true)+', '+dates[0].getFullYear()+' - '+
+                                        dates[1].getDate()+' '+dates[1].getMonthName(true)+', '+dates[1].getFullYear());
+          }
         });
+        // initialize the special date dropdown field
+        $('#date-range-field2 span').text(from.getDate()+' '+from.getMonthName(true)+', '+from.getFullYear()+' - '+
+                                        to.getDate()+' '+to.getMonthName(true)+', '+to.getFullYear());
         
+        // bind a click handler to the date display field, which when clicked
+        // toggles the date picker calendar, flips the up/down indicator arrow,
+        // and keeps the borders looking pretty
+        $('#date-range-field2').bind('click', function(){
+          $('#datepicker-calendar2').toggle();
+          if($('#date-range-field2 a').text().charCodeAt(0) == 9660) {
+            // switch to up-arrow
+            $('#date-range-field2 a').html('&#9650;');
+            $('#date-range-field2').css({borderBottomLeftRadius:0, borderBottomRightRadius:0});
+            $('#date-range-field2 a').css({borderBottomRightRadius:0});
+          } else {
+            // switch to down-arrow
+            $('#date-range-field2 a').html('&#9660;');
+            $('#date-range-field2').css({borderBottomLeftRadius:5, borderBottomRightRadius:5});
+            $('#date-range-field2 a').css({borderBottomRightRadius:5});
+          }
+          return false;
+        });      
+
         // global click handler to hide the widget calendar when it's open, and
         // some other part of the document is clicked.  Note that this works best
         // defined out here rather than built in to the datepicker core because this
@@ -191,6 +233,8 @@
         });
       });
       /* End special page widget */
+
+
     </script>
     
 
@@ -406,6 +450,50 @@ $('#datepicker-calendar').DatePicker({
       </div>
     </div>
     
+    <hr/>
+
+    <div class="row">
+      <div class="span4">
+        <h3>Calendar With Custom Widget, 2 months </h3>
+        <p>A calendar that allows date range selection, tied to a custom widget box.</p>
+        <p>See the page source for the full widget styling and javascript.</p>
+      </div>
+      <div class="span8">
+        <div id="date-range2">
+          <div id="date-range-field2">
+            <span></span>
+            <a href="#">&#9660;</a>
+          </div>
+          <div id="datepicker-calendar2"></div>
+        </div>
+      </div>
+    </div>
+      
+      <div class="row">
+        <div class="span8 offset4">
+          <pre class="prettyprint">
+var to = new Date();
+var from = new Date(to.getTime() - 1000 * 60 * 60 * 24 * 14);
+
+$('#datepicker-calendar').DatePicker({
+  inline: true,
+  date: [from, to],
+  calendars: 2,
+  mode: 'range',
+  current: new Date(to.getFullYear(), to.getMonth() - 1, 1),
+  onChange: function(dates,el) {
+    // update the range display
+    $('#date-range-field span').text(
+      dates[0].getDate()+' '+dates[0].getMonthName(true)+', '+
+      dates[0].getFullYear()+' - '+
+      dates[1].getDate()+' '+dates[1].getMonthName(true)+', '+
+      dates[1].getFullYear());
+  }
+});</pre>
+        </div>
+      </div>
+    </div>
+
     <footer class="footer">
       <div class="container">
         <p class="pull-right"><a href="#">Back to top</a></p>
