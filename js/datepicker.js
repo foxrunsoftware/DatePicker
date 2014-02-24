@@ -194,6 +194,10 @@
          */
         showOn: 'focus',
         /**
+        * Whether or not to allow dates in the past to be selectable, boolean, defaults to true
+        */
+        pastDatesSelectable: true,
+        /**
          * Callback, invoked prior to the rendering of each date cell, which 
          * allows control of the styling of the cell via the returned hash.
          * 
@@ -346,6 +350,10 @@
             if (date > today) {
               // current month, date in future
               data.weeks[indic].days[indic2].classname.push('datepickerFuture');
+            }
+
+            if (date < today && !options.pastDatesSelectable) {
+              data.weeks[indic].days[indic2].classname.push('datepickerDisabled');
             }
             
             if (month != date.getMonth()) {
