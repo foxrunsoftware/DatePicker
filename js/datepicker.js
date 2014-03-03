@@ -170,6 +170,10 @@
          */  
         starts: 0,
         /**
+         * Specify a minimum date
+         */
+        minDate :null,
+        /**
          * Previous link text.  Default '&#9664;' (Unicode left arrow)
          */
         prev: '&#9664;',
@@ -343,6 +347,11 @@
             if (today.getDate() == date.getDate() && today.getMonth() == date.getMonth() && today.getYear() == date.getYear()) {
               data.weeks[indic].days[indic2].classname.push('datepickerToday');
             }
+
+            if (date < options.minDate) {
+              data.weeks[indic].days[indic2].classname.push('datepickerMinDate');
+            }
+
             if (date > today) {
               // current month, date in future
               data.weeks[indic].days[indic2].classname.push('datepickerFuture');
@@ -526,7 +535,7 @@
               fillIt = true;
             }
             
-          } else if (parentEl.is('td') && !parentEl.hasClass('datepickerDisabled')) {
+          } else if (parentEl.is('td') && !parentEl.hasClass('datepickerDisabled') && !parentEl.hasClass('datepickerMinDate') ) {
             // clicking the calendar grid
             
             if(tblEl.eq(0).hasClass('datepickerViewMonths')) {
