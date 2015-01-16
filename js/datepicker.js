@@ -25,7 +25,7 @@
     var ids = {},
       views = {
         years: 'datepickerViewYears',
-        moths: 'datepickerViewMonths',
+        months: 'datepickerViewMonths',
         days:  'datepickerViewDays'
       },
       tpl = {
