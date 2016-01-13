@@ -917,6 +917,7 @@
           if ($(this).data('datepickerId')) {
             var cal = $('#' + $(this).data('datepickerId'));
             var options = cal.data('datepicker');
+            options.lastSel = false;
             options.date = normalizeDate(options.mode, date);
             
             if (shiftTo) {
@@ -959,6 +960,7 @@
             } else {
               options.date = [];
             }
+            options.lastSel = false;
             fill(cal.get(0));
           }
         });
