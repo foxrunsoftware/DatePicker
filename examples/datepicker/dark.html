@@ -1,0 +1,389 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Dark Style - DatePicker</title>
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <!-- jquery -->
+    <script type="text/javascript" src="assets/js/jquery/jquery.js"></script>
+    
+    <!-- load twitter bootstrap styles and optional javascript -->
+    <link rel="stylesheet" media="screen" type="text/css" href="assets/css/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="assets/css/bootstrap/js/bootstrap.min.js"></script>
+    
+    <!-- datepicker javascript and css -->
+    <script type="text/javascript" src="../../js/datepicker.js"></script>
+    <link rel="stylesheet" media="screen" type="text/css" href="../../css/datepicker/base.css" />
+    <link rel="stylesheet" media="screen" type="text/css" href="../../css/datepicker/dark.css" />
+    
+    <!-- Google Code Prettify -->
+    <link href="assets/css/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="assets/css/prettify/prettify.js"></script>
+    
+    <style type="text/css">
+      /* Style the calendar custom widget */
+      #date-range {
+        position:relative;
+      }
+      #date-range-field {
+        width: 290px;
+        height: 26px;
+        overflow: hidden;
+        position: relative;
+        cursor:pointer;
+        border: 1px solid #CCCCCC;
+        border-radius: 5px 5px 5px 5px;
+      }
+      #date-range-field a  {
+        color:#B2B2B2;
+        background-color:#F7F7F7;
+        text-align:center;
+        display: block;
+        position: absolute;
+        width: 26px;
+        height: 23px;
+        top: 0;
+        right: 0;
+        text-decoration: none;
+        padding-top:6px;
+        border-radius: 0 5px 5px 0;
+      }
+      #date-range-field span {
+        font-size: 12px;
+        font-weight: bold;
+        color: #404040;
+        position: relative;
+        top: 0;
+        height: 26px;
+        line-height: 26px;
+        left: 5px;
+        width: 250px;
+        text-align: center;
+      }
+      
+      #datepicker-calendar {
+        position: absolute;
+        top: 27px;
+        left: 0;
+        overflow: hidden;
+        width: 527px;
+        height: 157px;
+        background-color: black;
+        border: 3px solid #CCCCCC;
+        border-radius: 0 5px 5px 5px;
+        display:none;
+      }
+    </style>
+      
+    <script type="text/javascript">
+      
+      $(document).ready(function() {
+        
+        // pretty-print the source
+        prettyPrint();
+        
+        /* simple inline calendar */
+        $('#simple-calendar').DatePicker({
+          mode: 'single',
+          inline: true,
+          date: new Date()
+        });
+        
+        /* multi inline calendar */
+        $('#multi-calendar').DatePicker({
+          mode: 'multiple',
+          inline: true,
+          calendars: 3,
+          date: [new Date(), new Date() - 1000 * 60 * 60 * 24 * 2, new Date() - 1000 * 60 * 60 * 24 * 4]
+        });
+        
+        /* Calendar tied to text input */
+        $('#inputDate').DatePicker({
+          mode: 'single',
+          position: 'right',
+          onBeforeShow: function(el){
+            if($('#inputDate').val()) $('#inputDate').DatePickerSetDate($('#inputDate').val(), true);
+          },
+          onChange: function(date, el) {
+            $(el).val((date.getMonth()+1)+'/'+date.getDate()+'/'+date.getFullYear());
+            if($('#closeOnSelect input').attr('checked')) {
+              $(el).DatePickerHide();
+            }
+          }
+        });
+        
+        /* Special date widget */
+       
+        var to = new Date();
+        var from = new Date(to.getTime() - 1000 * 60 * 60 * 24 * 14);
+        
+        $('#datepicker-calendar').DatePicker({
+          inline: true,
+          date: [from, to],
+          calendars: 3,
+          mode: 'range',
+          current: new Date(to.getFullYear(), to.getMonth() - 1, 1),
+          onChange: function(dates,el) {
+            // update the range display
+            $('#date-range-field span').text(dates[0].getDate()+' '+dates[0].getMonthName(true)+', '+dates[0].getFullYear()+' - '+
+                                        dates[1].getDate()+' '+dates[1].getMonthName(true)+', '+dates[1].getFullYear());
+          }
+        });
+        
+        // initialize the special date dropdown field
+        $('#date-range-field span').text(from.getDate()+' '+from.getMonthName(true)+', '+from.getFullYear()+' - '+
+                                        to.getDate()+' '+to.getMonthName(true)+', '+to.getFullYear());
+        
+        // bind a click handler to the date display field, which when clicked
+        // toggles the date picker calendar, flips the up/down indicator arrow,
+        // and keeps the borders looking pretty
+        $('#date-range-field').bind('click', function(){
+          $('#datepicker-calendar').toggle();
+          if($('#date-range-field a').text().charCodeAt(0) == 9660) {
+            // switch to up-arrow
+            $('#date-range-field a').html('&#9650;');
+            $('#date-range-field').css({borderBottomLeftRadius:0, borderBottomRightRadius:0});
+            $('#date-range-field a').css({borderBottomRightRadius:0});
+          } else {
+            // switch to down-arrow
+            $('#date-range-field a').html('&#9660;');
+            $('#date-range-field').css({borderBottomLeftRadius:5, borderBottomRightRadius:5});
+            $('#date-range-field a').css({borderBottomRightRadius:5});
+          }
+          return false;
+        });
+        
+        // global click handler to hide the widget calendar when it's open, and
+        // some other part of the document is clicked.  Note that this works best
+        // defined out here rather than built in to the datepicker core because this
+        // particular example is actually an 'inline' datepicker which is displayed
+        // by an external event, unlike a non-inline datepicker which is automatically
+        // displayed/hidden by clicks within/without the datepicker element and datepicker respectively
+        $('html').click(function() {
+          if($('#datepicker-calendar').is(":visible")) {
+            $('#datepicker-calendar').hide();
+            $('#date-range-field a').html('&#9660;');
+            $('#date-range-field').css({borderBottomLeftRadius:5, borderBottomRightRadius:5});
+            $('#date-range-field a').css({borderBottomRightRadius:5});
+          }
+        });
+        
+        // stop the click propagation when clicking on the calendar element
+        // so that we don't close it
+        $('#datepicker-calendar').click(function(event){
+          event.stopPropagation();
+        });
+      });
+      /* End special page widget */
+    </script>
+    
+
+    <style type="text/css">
+      /* Page-specific styles */
+      body { padding-top:40px; }
+      .breadcrumb { margin-top:20px; }
+      .footer {
+        background-color: #EEEEEE;
+        border-top: 1px solid #E5E5E5;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.024) inset;
+        min-width: 940px;
+        padding: 30px 0;
+        text-shadow: 0 1px 0 #FFFFFF;
+      }
+      .masthead {
+        margin-bottom: 72px;
+        padding-top: 36px;
+      }
+      .masthead h1, .masthead p {
+        text-align: center;
+      }
+      .masthead h1 {
+        margin-bottom: 18px;
+        font-size:42px;
+      }
+      .masthead p {
+        font-size: 30px;
+        line-height: 36px;
+        margin-left: 5%;
+        margin-right: 5%;
+      }
+      .row { margin-bottom: 20px; }
+    
+      /* bootstrap-style the datepicker calendar/widget */
+      div.datepicker table { margin-bottom: 0; }
+      div.datepicker table th,
+      div.datepicker table td { border-top-style:none; }
+      #date-range-field a { outline-style: none; }
+      
+    </style>
+  </head>
+  <body style="padding-top:60px;">
+    
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a href="./" class="brand">DatePicker</a>
+          <ul class="nav">
+            <li><a href="./">Clean Style</a></li>
+            <li class="active"><a href="./dark.html">Dark Style</a></li>
+            <li><a href="./reference.html">API/Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container">
+      
+      <div class="page-header">
+        <h1>Dark Style Examples</h1>
+      </div>
+      
+      <div class="row">
+        <div class="span4">
+          <h3>Load the Scripts/Styles</h3>
+          <p>First, load jquery, datepicker, and the base and dark stylesheets.</p>
+        </div>
+        <div class="span8">
+          <pre class="prettyprint">
+&lt;script type="text/javascript" src="/js/jquery/jquery.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/js/datepicker/js/datepicker.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" type="text/css" href="/js/datepicker/css/base.css" /&gt;
+&lt;link rel="stylesheet" type="text/css" href="/js/datepicker/css/dark.css" /&gt;</pre>
+        </div>
+      </div>
+      <hr/>
+      
+      <div class="row">
+        <div class="span4">
+          <h3>Simple Calendar</h3>
+          <p>A simple inline calendar.</p>
+        </div>
+        <div class="span4">
+          <div id="simple-calendar"></div>
+        </div>
+        <div class="span4">
+          <pre class="prettyprint">
+$('#simple-calendar').DatePicker({
+  mode: 'single',
+  inline: true,
+  date: new Date()
+});</pre>
+        </div>
+      </div>
+      <hr/>
+      
+      <div class="row">
+        <div class="span4">
+          <h3>Multi Calendar</h3>
+          <p>Three calendars, side-by-side, with multiple date selection enabled as well.</p>
+        </div>
+        <div class="span8">
+          <div id="multi-calendar"></div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="span8 offset4">
+          <pre class="prettyprint">
+$('#multi-calendar').DatePicker({
+  mode: 'multiple',
+  inline: true,
+  calendars: 3,
+  date: [new Date(), new Date() - 172800000, new Date() - 345600000]
+});</pre>
+        </div>
+      </div>
+      <hr/>
+      
+      <div class="row">
+        <div class="span4">
+          <h3>Calendar With Input</h3>
+          <p>A calendar tied to a text input box.</p>
+        </div>
+        <div class="span8">
+          <form class="form-inline">
+            <input class="inputDate" id="inputDate" value="" />
+            <label id="closeOnSelect" class="checkbox"><input type="checkbox" checked="checked"> Close on selection</label>
+          </form>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="span8 offset4">
+          <pre class="prettyprint">
+$('#inputDate').DatePicker({
+  mode: 'single',
+  position: 'right',
+  onBeforeShow: function(el){
+    if($('#inputDate').val())
+      $('#inputDate').DatePickerSetDate($('#inputDate').val(), true);
+  },
+  onChange: function(date, el) {
+    $(el).val((date.getMonth()+1)+'/'+date.getDate()+'/'+date.getFullYear());
+    if($('#closeOnSelect input').attr('checked')) {
+      $(el).DatePickerHide();
+    }
+  }
+});</pre>
+        </div>
+      </div>
+      
+      <hr/>
+      
+      <div class="row">
+        <div class="span4">
+          <h3>Calendar With Custom Widget </h3>
+          <p>A calendar that allows date range selection, tied to a custom widget box.</p>
+          <p>See the page source for the full widget styling and javascript.</p>
+        </div>
+        <div class="span8">
+          <div id="date-range">
+            <div id="date-range-field">
+              <span></span>
+              <a href="#">&#9660;</a>
+            </div>
+            <div id="datepicker-calendar"></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="span8 offset4">
+          <pre class="prettyprint">
+var to = new Date();
+var from = new Date(to.getTime() - 1000 * 60 * 60 * 24 * 14);
+
+$('#datepicker-calendar').DatePicker({
+  inline: true,
+  date: [from, to],
+  calendars: 3,
+  mode: 'range',
+  current: new Date(to.getFullYear(), to.getMonth() - 1, 1),
+  onChange: function(dates,el) {
+    // update the range display
+    $('#date-range-field span').text(
+      dates[0].getDate()+' '+dates[0].getMonthName(true)+', '+
+      dates[0].getFullYear()+' - '+
+      dates[1].getDate()+' '+dates[1].getMonthName(true)+', '+
+      dates[1].getFullYear());
+  }
+});</pre>
+        </div>
+      </div>
+    </div>
+    
+    <footer class="footer">
+      <div class="container">
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p>Code dual licensed under the MIT or GPL Version 2 licenses.</p>
+        <p><a href="http://www.foxrunsoftware.net/articles/javascript/date-range-picker-similar-to-google-analytics/">Fox Run Software</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

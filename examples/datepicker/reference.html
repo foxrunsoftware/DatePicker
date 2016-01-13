@@ -1,0 +1,363 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>API - DatePicker</title>
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <!-- jquery -->
+    <script type="text/javascript" src="assets/js/jquery/jquery.js"></script>
+    
+    <!-- load twitter bootstrap styles and optional javascript -->
+    <link rel="stylesheet" media="screen" type="text/css" href="assets/css/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="assets/css/bootstrap/js/bootstrap.min.js"></script>
+    
+    <!-- Google Code Prettify -->
+    <link href="assets/css/prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="assets/css/prettify/prettify.js"></script>
+    
+    <style type="text/css">
+      /* Page-specific styles */
+      body { padding-top:40px; }
+      .breadcrumb { margin-top:20px; }
+      h2 + table, h3 + table, h4 + table, h2 + .row {
+        margin-top: 5px;
+      }
+      .footer {
+        background-color: #EEEEEE;
+        border-top: 1px solid #E5E5E5;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.024) inset;
+        min-width: 940px;
+        padding: 30px 0;
+        text-shadow: 0 1px 0 #FFFFFF;
+      }
+      .masthead {
+        margin-bottom: 72px;
+        padding-top: 36px;
+      }
+      .masthead h1, .masthead p {
+        text-align: center;
+      }
+      .masthead h1 {
+        margin-bottom: 18px;
+        font-size:42px;
+      }
+      .masthead p {
+        font-size: 30px;
+        line-height: 36px;
+        margin-left: 5%;
+        margin-right: 5%;
+      }
+    .row { margin-bottom: 20px; }
+    </style>
+  </head>
+  <body style="padding-top:60px;">
+    
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a href="./" class="brand">DatePicker</a>
+          <ul class="nav">
+            <li><a href="./">Clean Style</a></li>
+            <li><a href="./dark.html">Dark Style</a></li>
+            <li class="active"><a href="./reference.html">API/Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container">
+      
+      <div class="page-header">
+        <h1>Reference/API</h1>
+      </div>
+      
+      <div class="row">
+        <div class="span12 columns">
+          <h2 id="options">Using DatePicker</h2>
+          <p>Call the date picker via javascript, all options are optional:</p>
+          <pre class="prettyprint">$('#datepicker-calendar').DatePicker(options)</pre>
+          
+          <h3>Options</h3>
+          <table class="table table-bordered table-striped">
+            <thead>
+
+             <tr>
+               <th style="width: 100px;">Name</th>
+               <th style="width: 75px;">type</th>
+               <th style="width: 50px;">default</th>
+               <th>description</th>
+             </tr>
+            </thead>
+
+            <tbody>
+             <tr>
+               <td>date</td>
+               <td>Date | int | String | Array</td>
+               <td>null</td>
+               <td>The currently selected date(s).  This can be: a single date, an array of two dates 
+                (sets a range when 'mode' is 'range'), or an array of any number of dates (selects all dates when 'mode' is 'multiple'.  
+                The supplied dates can be any one of: Date object, milliseconds (as from date.getTime(), date.valueOf()), or a date string 
+                parseable by Date.parse().</td>
+             </tr>
+
+            <tr>
+               <td>selectableDates</td>
+               <td>Array</td>
+               <td>null</td>
+               <td>The range in which the user can select a date, it's defined as two dates [minSelectableDate, maxSelectableDate] and should be used only when the 'mode' is 'range'.</td>
+             </tr>
+
+             <tr>
+               <td id="option-inline">current</td>
+               <td>Date | int | String</td>
+               <td>today</td>
+               <td>Optional date which determines the current calendar month/year.  
+                This can be one of: Date object, milliseconds (as from date.getTime(), 
+                date.valueOf()), or a date string  parseable by Date.parse().  
+                Defaults to todays date.</td>
+             </tr>
+
+             <tr>
+               <td id="option-mode">inline</td>
+               <td>boolean</td>
+               <td>false</td>
+               <td>true causes the datepicker calendar to be appended to the DatePicker element and shown on the page, false binds the DatePicker to an event on the trigger element</td>
+             </tr>
+
+             <tr>
+               <td>mode</td>
+               <td>String</td>
+               <td>'single'</td>
+               <td>Date selection mode, one of 'single', 'range' or 'multiple'.  Default 'single'.  
+                'Single' allows the selection of a single date, 'range' allows the selection of 
+                range of dates, and 'multiple' allows the selection of any number of individual dates.</td>
+             </tr>
+
+             <tr>
+               <td>calendars</td>
+               <td>int</td>
+               <td>1</td>
+               <td>Number of side-by-side calendars.</td>
+             </tr>
+
+             <tr>
+               <td>starts</td>
+               <td>int</td>
+               <td>0</td>
+               <td>The day that starts the week, where 0: Sunday, 1: Monday, 2: Tuesday, 3: Wednesday, 4: Thursday, 5: Friday, 6: Saturday.  Defaults to Sunday.</td>
+             </tr>
+
+             <tr>
+               <td>prev</td>
+               <td>String</td>
+               <td>'&amp;#9664;'</td>
+               <td>Previous link text.  Default '&#9664;' (Unicode left arrow).</td>
+             </tr>
+
+             <tr>
+               <td>next</td>
+               <td>String</td>
+               <td>'&amp;#9654;'</td>
+               <td>Next link text.  Default '&#9654;' (Unicode right arrow)</td>
+             </tr>
+
+             <tr>
+               <td>view</td>
+               <td>String</td>
+               <td>'days'</td>
+               <td>Initial calendar view, one of 'days', 'months' or 'years'.</td>
+             </tr>
+
+             <tr>
+               <td>position</td>
+               <td>String</td>
+               <td>'bottom'</td>
+               <td>Date picker's position relative to the trigger element (non inline mode only), one of 'top', 'left', 'right' or 'bottom'.</td>
+             </tr>
+
+             <tr>
+               <td>showOn</td>
+               <td>String</td>
+               <td>'focus'</td>
+               <td>The trigger event used to show a non-inline calendar.  Defaults 
+                to 'focus' which is useful when the trigger element is a text input, 
+                can also be 'click' for instance if the trigger element is a button 
+                or some text element.</td>
+             </tr>
+
+             <tr>
+               <td>locale</td>
+               <td>hash</td>
+               <td><em>English</em></td>
+               <td>Locale text for day/month names: provide a hash with keys 'daysMin', 'months' and 'monthsShort'.</td>
+             </tr>
+            </tbody>
+
+          </table>
+          
+          <h3>Events</h3>
+          <p>Supply a callback function as an option when the DatePicker is created.  Example usage:</p>
+          <pre class="prettyprint">$('#datepicker-calendar').DatePicker(onBeforeShow: function(el) { alert('About to show!') })</pre>
+          <table class="table table-bordered table-striped">
+            <thead>
+
+             <tr>
+               <th style="width: 100px;">Name</th>
+               <th style="width: 200px;">Signature</th>
+               <th style="width: 50px;">Return</th>
+               <th>description</th>
+             </tr>
+            </thead>
+
+            <tbody>
+             <tr>
+               <td>onRenderCell</td>
+               <td>function(HTMLDivElement, Date)</td>
+               <td>hash</td>
+               <td>Invoked prior to the rendering of each date cell, which allows 
+                control over the styling of the cell via the returned hash.  The first
+                argument is the datepicker-containing element, the second is the date
+                to be rendered.  This function should return a hash, which may contain
+                the following attributes: <ul><li><tt>selected</tt> if true, date will be selected</li>
+                <li><tt>disabled</tt> if true, date cell will be disabled</li><li><tt>className</tt> css class name to add to the cell.</li></ul></td>
+             </tr>
+             
+             <tr>
+               <td>onChange</td>
+               <td>function(Date | Array, HTMLElement)</td>
+               <td>void</td>
+               <td>Invoked when a date is selected, with <tt>this</tt> bound to the 
+                HTMLElement that DatePicker was invoked upon.  The first argument
+                represents the date(s) currently selected: when calendar <a href="#option-mode">mode</a>  is 'single' this
+                is a single Date object.  When calendar mode is 'range', this is an array containing
+                a 'from' and 'to' Date objects.  When calendar mode is 'multiple' this
+                is an array of Date objects (or empty array if the only selected date is unselected).  
+                The second argument is the element that DatePicker() was invoked upon.</td>
+             </tr>
+             
+             <tr>
+               <td>onBeforeShow</td>
+               <td>function(HTMLDivElement)</td>
+               <td>boolean</td>
+               <td>Invoked before a <a href="#option-inline">non-inline</a> datepicker is shown, 
+                with <tt>this</tt> bound to the HTMLElement that DatePicker() was invoked upon, ie
+                the trigger element.  The argument is the datepicker container element.  This function
+                should return a boolean, where <tt>true</tt> allows the datepicker to be shown
+                and <tt>false</tt> does not.</td>
+             </tr>
+             
+             <tr>
+               <td>onAfterShow</td>
+               <td>function(HTMLDivElement)</td>
+               <td>void</td>
+               <td>Invoked after a <a href="#option-inline">non-inline</a> datepicker is shown, with <tt>this</tt> 
+                bound to the HTMLElement that DatePicker() was invoked upon, ie the trigger element.
+                The argument is the datepicker container element.</td>
+             </tr>
+             
+             <tr>
+               <td>onBeforeHide</td>
+               <td>function(HTMLDivElement)</td>
+               <td>boolean</td>
+               <td>Invoked before a <a href="#option-inline">non-inline</a> datepicker is hidden, with <tt>this</tt>  
+                bound to the HTMLElement that DatePicker was invoked upon, ie
+                the trigger element.  The argument is the datepicker container element.
+                This function should return a boolean, where <tt>true</tt> allows
+                the datepicker to be hidden while <tt>false</tt> does not.</td>
+             </tr>
+             
+             <tr>
+               <td>onAfterHide</td>
+               <td>function(HTMLDivElement)</td>
+               <td>void</td>
+               <td>Invoked after a <a href="#option-inline">non-inline</a> datepicker is hidden, with <tt>this</tt>
+                bound to the HTMLElement that DatePicker() was invoked upon, ie
+                the trigger element.  The argument is the datepicker container element.</td>
+             </tr>
+            </tbody>
+
+          </table>
+          
+          <h3>Methods</h3>
+          <p>The following methods may be invoked on the HTMLElement that DatePicker
+            is tied to.</p>
+          <h4>.DatePicker(options)</h4>
+          <p>Creates and initializes the DatePicker. Accepts an optional <a href="#options">options</a> <code>hash</code>.</p>
+<pre class="prettyprint linenums">
+$('#datepicker-calendar').DatePicker({
+  options
+})</pre>
+
+          <h4>.DatePickerHide()</h4>
+          <p>Manually hides the DatePicker, applicable only when the picker is not <a href="#option-inline">inline.</a></p>
+          <pre class="prettyprint linenums">$('#datepicker-calendar').DatePickerHide()</pre>
+          
+          <h4>.DatePickerShow()</h4>
+          <p>Manually shows the DatePicker, applicable only when the picker is not <a href="#option-inline">inline</a>.</p>
+          <pre class="prettyprint linenums">$('#datepicker-calendar').DatePickerShow()</pre>
+          
+          <h4>.DatePickerSetDate(date, shiftTo)</h4>
+          <p>Manually sets the DatePicker current date, and optionally shifts the current calendar to that date.</p>
+          <h5>Arguments</h5>
+          <table class="table table-bordered table-striped">
+            <thead>
+
+             <tr>
+               <th style="width: 100px;">Name</th>
+               <th style="width: 75px;">type</th>
+               <th>description</th>
+             </tr>
+            </thead>
+
+            <tbody>
+             <tr>
+               <td>date</td>
+               <td>Date | int | String | Array</td>
+               <td>Sets the currently selected date(s).  This can be: a single date, an array of two dates 
+                (sets a range when <a href="#option-mode">mode</a> is 'range'), or an array of any number of dates (selects all dates when <a href="#option-mode">mode</a> is 'multiple'.  
+                The supplied dates can be any one of: Date object, milliseconds (as from date.getTime(), date.valueOf()), or a date string 
+                parseable by Date.parse().</td>
+             </tr>
+
+             <tr>
+               <td>shiftTo</td>
+               <td>boolean</td>
+               <td>if true, shifts the visible calendar to the newly set date(s)</td>
+             </tr>
+            </tbody>
+
+          </table>
+          <pre class="prettyprint linenums">$('#datepicker-calendar').DatePickerSetDate(new Date(), true)</pre>
+          
+          <h4>.DatePickerGetDate() : Array</h4>
+          <p>Returns the currently selected date(s) and the datepicker element.  An array is returned
+             where the first element is the selected date(s).  When calendar <a href="#option-mode">mode</a> is 'single' this
+             is a single date object, or <tt>null</tt> if no date is selected.  When calendar <a href="#option-mode">mode</a> is 'range', this is an array containing 
+             a 'from' and 'to' date objects, or empty array if no date range is selected.  When calendar <a href="#option-mode">mode</a> is 'multiple'
+             this is an array of Date objects, or the empty array if no date is selected.
+             The second element is the HTMLElement that DatePicker() was invoked upon.</p>
+          <pre class="prettyprint linenums">$('#datepicker-calendar').DatePickerGetDate()</pre>
+          
+          <h4>.DatePickerClear()</h4>
+          <p>Manually clears any currently selected date(s).</p>
+          <pre class="prettyprint linenums">$('#datepicker-calendar').DatePickerClear()</pre>
+          
+        </div>
+      </div>
+    </div>
+    
+    <footer class="footer">
+      <div class="container">
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p>Code dual licensed under the MIT or GPL Version 2 licenses.</p>
+        <p><a href="http://www.foxrunsoftware.net/articles/javascript/date-range-picker-similar-to-google-analytics/">Fox Run Software</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

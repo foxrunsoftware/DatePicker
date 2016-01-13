@@ -150,6 +150,12 @@
          */
         current: null,
         /**
+         * Optional date range which limits the selectable dates. The range of acceptable dates,
+         * in an array of [min, max], disables any date outside of the range. Arguments should be
+         * Date objects.
+         */
+        selectableDates: null,
+        /**
          * true causes the datepicker calendar to be appended to the DatePicker 
          * element and rendered, false binds the DatePicker to an event on the trigger element
          */
@@ -343,7 +349,12 @@
             if (today.getDate() == date.getDate() && today.getMonth() == date.getMonth() && today.getYear() == date.getYear()) {
               data.weeks[indic].days[indic2].classname.push('datepickerToday');
             }
-            if (date > today) {
+            if($.isArray(options.selectableDates) && options.selectableDates.length == 2) {
+              if(date < options.selectableDates[0] || date > options.selectableDates[1]) {
+                data.weeks[indic].days[indic2].classname.push('datepickerFuture');
+                data.weeks[indic].days[indic2].classname.push('datepickerDisabled');
+              }
+            } else if (date > today) {
               // current month, date in future
               data.weeks[indic].days[indic2].classname.push('datepickerFuture');
             }
@@ -478,6 +489,8 @@
           var tblEl = parentEl.parent().parent().parent();
           var tblIndex = $('table', this).index(tblEl.get(0)) - 1;
           var tmp = new Date(options.current);
+          var tmpStart = new Date(options.current);
+          var tmpEnd = new Date(options.current);
           var changed = false;
           var changedRange = false;
           var fillIt = false;
@@ -489,13 +502,46 @@
             if (el.hasClass('datepickerMonth')) {
               // clicking on the title of a Month Datepicker
               tmp.addMonths(tblIndex - currentCal);
+              tmpStart.addMonths(tblIndex - currentCal);
+              tmpEnd.addMonths(tblIndex - currentCal);
               
               if(options.mode == 'range') {
                 // range, select the whole month
-                options.date[0] = (tmp.setHours(0,0,0,0)).valueOf();
-                tmp.addDays(tmp.getMaxDays()-1);
-                tmp.setHours(23,59,59,0);
-                options.date[1] = tmp.valueOf();
+
+                // Check if the start date is allowed 
+                // options.selectableDates[0];
+                // options.selectableDates[1];
+                var baseDate = options.selectableDates[0];
+                var endDate = options.selectableDates[1];
+
+                tmpStart.setHours(0,0,0,0);
+                tmpStart.setDate(1);
+
+                if (options.selectableDates != null) {
+                  if (tmpStart.getTime() < baseDate.getTime() ){
+                    tmpStart.setTime(baseDate.getTime());
+                  }
+                }
+                options.date[0] = tmpStart.valueOf();
+                
+                // Check if the end date is allowed 
+                tmpEnd.setDate(tmpEnd.getMaxDays());
+                tmpEnd.setHours(23,59,59,0);
+
+                if (options.selectableDates != null) {
+                  if (tmpEnd.getTime() > endDate.getTime()){
+                    tmpEnd.setTime(endDate.getTime());
+                  }
+                }
+                options.date[1] = tmpEnd.valueOf();
+
+                if (options.selectableDates != null) {
+                  if((tmpStart.getTime() > endDate.getTime()) || (tmpEnd.getTime() < baseDate.getTime())){
+                    options.date[0] = 0;
+                    options.date[1] = 0;
+                  }
+                }
+
                 fillIt = true;
                 changed = true;
                 options.lastSel = false;
@@ -688,7 +734,7 @@
           var viewPort = getViewport();
           var top = pos.top;
           var left = pos.left;
-          var oldDisplay = $.curCSS(calEl, 'display');
+          var oldDisplay = $.css(calEl, 'display');
           cal.css({
             visibility: 'hidden',
             display: 'block'
