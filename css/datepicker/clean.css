@@ -50,7 +50,7 @@ tbody.datepickerDays td.datepickerSelected {
 }
 
 /* Grey out dates in the future */
-div.datepicker td.datepickerFuture a {
+div.datepicker td.datepickerFuture a, div.datepicker td.datepickerMinDate a{
   color:#DDDDDD;
 }
 
