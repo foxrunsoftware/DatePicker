@@ -1,0 +1,27 @@
+{
+  "name": "DatePicker",
+  "homepage": "https://github.com/foxrunsoftware/DatePicker",
+  "version": "0.1.0",
+  "authors": [
+    "Justin Stern (www.foxrunsoftware.net)"
+  ],
+  "description": "jQuery-based DatePicker with support for date ranges, multiple calendars, styling and more",
+  "main": "js/datepicker.js",
+  "keywords": [
+    "date",
+    "range",
+    "picker",
+    "jqueryrange"
+  ],
+  "dependencies": {
+    "jquery": ""
+  },
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
