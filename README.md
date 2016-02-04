@@ -6,19 +6,19 @@ Yet another jQuery-based date picker!  This date picker provides an easy way of 
 
 Download the latest release, and jQuery.
 
-    <script type="text/javascript" src="/js/jquery/jquery.js"></script>
-    <script type="text/javascript" src="/js/datepicker/js/datepicker.js"></script>
-    <link rel="stylesheet" media="screen" type="text/css" href="/js/datepicker/css/base.css" />
-    <link rel="stylesheet" media="screen" type="text/css" href="/js/datepicker/css/clean.css" />
+    <script type="text/javascript" src="js/datepicker.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <link rel="stylesheet" media="screen" type="text/css" href="css/datepicker/base.css" />
+    <link rel="stylesheet" media="screen" type="text/css" href="css/datepicker/clean.css" />
     
     <div id="simple-calendar"></div>
     
     <script type="text/javascript">
-      $('#simple-calendar').DatePicker({
-        mode: 'single',
-        inline: true,
-        date: new Date()
-      });
+        $('#simple-calendar').DatePicker({
+            mode: 'single',
+            inline: true,
+            date: new Date()
+        });
     </script>
 
 <img src="https://github.com/foxrunsoftware/DatePicker/blob/master/examples/screenshot-1.png?raw=true" />
