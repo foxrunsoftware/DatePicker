@@ -294,7 +294,7 @@
           if(i == options.calendars - 1) tblCal.addClass('datepickerLastView');
           
           if(tblCal.hasClass('datepickerViewDays')) {
-            dow = date.getMonthName(true)+", "+date.getFullYear();
+            dow = date.getMonthName(true)+" "+date.getFullYear();
           } else if(tblCal.hasClass('datepickerViewMonths')) {
             dow = date.getFullYear();
           } else if(tblCal.hasClass('datepickerViewYears')) {
@@ -500,7 +500,7 @@
                   el.find('span').text((tmp.getFullYear()-6) + ' - ' + (tmp.getFullYear()+5));
                 } else if(tblEl.eq(0).hasClass('datepickerViewYears')) {
                   tblEl.eq(0).toggleClass('datepickerViewYears datepickerViewDays');
-                  el.find('span').text(tmp.getMonthName(true)+", "+tmp.getFullYear());
+                  el.find('span').text(tmp.getMonthName(true)+" "+tmp.getFullYear());
                 }
               }
             } else if (parentEl.parent().parent().is('thead')) {
