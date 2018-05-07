@@ -20,11 +20,12 @@
  *   jquery.js
  */
 (function ($) {
-  var DatePicker = function () {
+	var cache = {}, tmpl,
+  DatePicker = function () {
     var ids = {},
       views = {
         years: 'datepickerViewYears',
-        moths: 'datepickerViewMonths',
+        months: 'datepickerViewMonths',
         days:  'datepickerViewDays'
       },
       tpl = {
@@ -469,7 +470,8 @@
           var tblIndex = $('table', this).index(tblEl.get(0)) - 1;
           var tmp = new Date(options.current);
           var changed = false;
-          var fillIt = false;
+					var changedRange = false;
+					var fillIt = false;
           var currentCal = Math.floor(options.calendars/2);
 
           if (parentEl.is('th')) {
@@ -567,7 +569,8 @@
                       options.date[1] = val;
                     }
                     options.lastSel = !options.lastSel;
-                    break;
+										changedRange = !options.lastSel;
+										break;
                   default:
                     options.date = tmp.valueOf();
                     break;
@@ -582,7 +585,10 @@
           if(changed) {
             options.onChange.apply(this, prepareDate(options));
           }
-        }
+          if(changedRange) {
+            options.onRangeChange.apply(this, prepareDate(options));
+          }
+				}
         return false;
       },
 
@@ -900,7 +906,8 @@
         return this.each(function(){
           if ($(this).data('datepickerId')) {
             var cal = $('#' + $(this).data('datepickerId'));
-            var options = cal.data('datepicker');
+						var options = cal.data('datepicker');
+						options.lastSel = false;
             options.date = normalizeDate(options.mode, date);
 
             if (shiftTo) {
@@ -942,7 +949,8 @@
               options.date = null;
             } else {
               options.date = [];
-            }
+						}
+						options.lastSel = false;
             fill(cal.get(0));
           }
         });
@@ -971,7 +979,7 @@
        * @see DatePickerRedraw()
        */
       redraw: function(){
-    	return this.each(function(){
+    		return this.each(function(){
           if ($(this).data('datepickerId')) {
             var cal = $('#' + $(this).data('datepickerId'));
             fill(cal.get(0));
@@ -992,13 +1000,8 @@
     DatePickerLayout: DatePicker.fixLayout,
     DatePickerRedraw: DatePicker.redraw
   });
-})(jQuery);
 
-(function(){
-  // within here, 'this' refers to the window object
-  var cache = {};
-
-  this.tmpl = function tmpl(str, data){
+	tmpl = function tmpl(str, data){
     // Figure out if we're getting a template, or if we need to
     // load the template - and be sure to cache the result.
     var fn = !/\W/.test(str) ?
@@ -1027,4 +1030,4 @@
     // Provide some basic currying to the user
     return data ? fn( data ) : fn;
   };
-})();
+})(jQuery);
